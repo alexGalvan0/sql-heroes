@@ -1,8 +1,7 @@
 import psycopg
 from psycopg import OperationalError
 
-
-def create_connection(db_name, db_user, db_password, db_host="127.0.0.1", db_port="5432"):
+def create_connection(db_name, db_user, db_password, db_host = "localhost", db_port = "5432"):
     connection = None
     try:
         connection = psycopg.connect(
@@ -17,6 +16,7 @@ def create_connection(db_name, db_user, db_password, db_host="127.0.0.1", db_por
         print(f"The error '{e}' occurred")
     return connection
 
+
 def execute_query(query, params=None):
     connection = create_connection("postgres", "postgres", "postgres")
     cursor = connection.cursor()
@@ -26,5 +26,5 @@ def execute_query(query, params=None):
         print("Query executed successfully")
         connection.close()
         return cursor
-    except Error as e:
+    except OSError as e:
         print(f"The error '{e}' occurred or the hero name is already taken")
