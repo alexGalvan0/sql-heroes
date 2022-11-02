@@ -12,7 +12,7 @@ def select_all():
         pp(record[1])
 
 
-def add_heroe():
+def add_hero():
     name = input('what is the Super Heroe Name? ')
     about_me = input('Super Heroe Bio: ')
     bio = input('Super Heroe bio: ')
@@ -22,4 +22,25 @@ def add_heroe():
     """
     execute_query(query, params)
 
-add_heroe()
+def deleteHero():
+    heroId = input('Hero Id to delete: ')
+    query = """
+        DELETE FROM heroes
+        WHERE id = %s
+    """
+    execute_query(query, (heroId,))
+
+
+
+
+def start():
+    step1 = input('What do you want to do?, (Create, Read, Update, Delete): ')
+    
+    if step1 == 'Create':
+        add_hero()
+    elif(step1 == 'Delete'):
+        deleteHero()
+    else:
+        pp('That is not an Option')
+
+start()
