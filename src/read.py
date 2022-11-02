@@ -34,12 +34,18 @@ def deleteHero():
 
 def updateHero():
     heroId = input('Hero Id to Update: ')
-    updateField = input('What do you want to update? (name, about me, biography): ')
+    updateField = input('What do you want to update? (name, about_me, biography): ')
     updateValue = input(f'What do you want to update {updateField} to? ')
 
+    params = (updateField,updateValue,heroId)
+
     query = """
-        
+        UPDATE heroes
+        SET %s = %s
+        WHERE id = %s
     """
+    execute_query(query,params)
+updateHero()
 
 
 
@@ -56,4 +62,4 @@ def start():
         pp('That is not an Option')
 
 
-start()
+
