@@ -37,6 +37,10 @@ def updateHero():
     updateField = input('What do you want to update? (name, about me, biography): ')
     updateValue = input(f'What do you want to update {updateField} to? ')
 
+    query = """
+        
+    """
+
 
 
 def start():
