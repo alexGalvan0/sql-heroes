@@ -1,7 +1,8 @@
 import psycopg
 from psycopg import OperationalError
 
-def create_connection(db_name, db_user, db_password, db_host = "127.0.0.1", db_port = "5432"):
+
+def create_connection(db_name, db_user, db_password, db_host="127.0.0.1", db_port="5432"):
     connection = None
     try:
         connection = psycopg.connect(
@@ -15,6 +16,8 @@ def create_connection(db_name, db_user, db_password, db_host = "127.0.0.1", db_p
     except OperationalError as e:
         print(f"The error '{e}' occurred")
     return connection
+
+
 create_connection('postgres', 'postgres', 'postgres')
 
 
