@@ -22,6 +22,7 @@ def add_hero():
     """
     execute_query(query, params)
 
+
 def deleteHero():
     heroId = input('Hero Id to delete: ')
     query = """
@@ -31,16 +32,22 @@ def deleteHero():
     execute_query(query, (heroId,))
 
 
+def updateHero():
+    heroId = input('Hero Id to Update: ')
+    updateField = input('What do you want to update? (name, about me, biography): ')
+    updateValue = input(f'What do you want to update {updateField} to? ')
+updateHero()
 
 
 def start():
     step1 = input('What do you want to do?, (Create, Read, Update, Delete): ')
-    
+
     if step1 == 'Create':
         add_hero()
-    elif(step1 == 'Delete'):
+    elif (step1 == 'Delete'):
         deleteHero()
     else:
         pp('That is not an Option')
+
 
 start()
