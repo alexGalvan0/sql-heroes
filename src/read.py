@@ -44,8 +44,8 @@ def updateHero():
         SET %s = %s
         WHERE id = %s
     """
-    execute_query(query,params)
-updateHero()
+    execute_query(query,(params,))
+
 
 
 
@@ -63,3 +63,4 @@ def start():
 
 
 
+start()
