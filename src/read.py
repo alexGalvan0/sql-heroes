@@ -36,7 +36,7 @@ def updateHero():
     heroId = input('Hero Id to Update: ')
     updateField = input('What do you want to update? (name, about me, biography): ')
     updateValue = input(f'What do you want to update {updateField} to? ')
-updateHero()
+
 
 
 def start():
@@ -46,6 +46,8 @@ def start():
         add_hero()
     elif (step1 == 'Delete'):
         deleteHero()
+    elif(step1 == 'Update'):
+        updateHero()
     else:
         pp('That is not an Option')
 
