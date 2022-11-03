@@ -13,9 +13,9 @@ def select_all():
 
 
 def add_hero():
-    name = input('what is the Super Heroe Name? ')
-    about_me = input('Super Heroe Bio: ')
-    bio = input('Super Heroe bio: ')
+    name = input('what is your Super Heroe Name? ')
+    about_me = input('Tell me about yourself: ')
+    bio = input('Tell me how you became super: ')
     params = (name, about_me, bio)
     query = """ 
         INSERT INTO heroes(name,about_me,biography) VALUES(%s,%s,%s)
@@ -46,21 +46,19 @@ def updateHero():
     """
     execute_query(query,(params,))
 
+def getProfile():
+
+
 
 
 
 def start():
-    step1 = input('What do you want to do?, (Create, Read, Update, Delete): ')
+    step1 = input('What do you want to do?, (SignUp, Login): ')
 
-    if step1 == 'Create':
+    if step1 == 'SignUp':
         add_hero()
-    elif (step1 == 'Delete'):
-        deleteHero()
-    elif(step1 == 'Update'):
-        updateHero()
-    else:
-        pp('That is not an Option')
-
+    if step1 == 'Login':
+        getProfile()
 
 
 start()
