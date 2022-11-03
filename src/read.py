@@ -29,22 +29,21 @@ def deleteHero():
         DELETE FROM heroes
         WHERE name = %s
     """
-    execute_query(query, (heroId,))
+    execute_query(query, (hero_name,))
 
 
 def updateHero():
-    heroId = input('Hero Id to Update: ')
-    updateField = input(
-        'What do you want to update? (name, about_me, biography): ')
-    updateValue = input(f'What do you want to update {updateField} to? ')
-
-    params = (updateValue, heroId)
+    heroName = input('Hero name to Update: ')
+    updateValue = input(f'What do you want to update name to? ')
 
     query = """
     UPDATE heroes
     SET name = %s
-    WHERE id = %s
+    WHERE name = %s
     """
+    params = (updateValue, heroName)
+
+
     execute_query(query, params)
 
 
@@ -59,24 +58,34 @@ def getProfile():
     FROM heroes
     WHERE name = %s
     """
-    profile = execute_query(query, params).fetchall()
-    pp(profile)
+    data = execute_query(query, params).fetchall()
+    pp(data)
+
 
 
 def getHeroAbilities():
+    heroId  = input('What is your Id? ')
     query = """
         SELECT 
-        abilities.id AS ABSID,
-        ability_types.name AS SUPNAME,
-        abilities.hero_id HERID
+        ability_types.name,
+        abilities.hero_id
+        WHERE 
 
         FROM ability_types
-        JOIN abilities ON abilities.ability_type_id = ability_types.id
-       
+        JOIN abilities ON abilities.ability_type_id = ability_types.id   
     """
     params = (1,)
     pp(list(execute_query(query)))
 
+def getAllHeroes():
+    query = """
+    SELECT 
+        name
+    FROM 
+        heroes
+    """
+    data = execute_query(query).fetchall()
+    pp(data)
 
 
 def start():
@@ -91,10 +100,17 @@ def start():
 
     if step1 == 'SignUp':
         add_hero()
+        getProfile()
+
     if step1 == 'Login':
         getProfile()
-        step2 = input('What would you like to update? (profile, abilities, friends)')
-        if step2 == 'profile':
-            updateHero()
-        
+    setep2 = input('What next? (get Heroes, Delete Profile, get abilities) ')
+    if setep2 == 'get Heroes':
+        getAllHeroes()
+    elif setep2 == 'Delete Profile':
+        deleteHero()
+    elif setep2 == 'get abilities':
+        getHeroAbilities()
+    else:
+        pp('that is not an optionLogin')
 start()

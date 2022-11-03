@@ -23,7 +23,7 @@ def execute_query(query, params=None):
     try:
         cursor.execute(query, params)
         connection.commit()
-        # print("Query executed successfully")
+        #print(query)
         connection.close()
         return cursor
     except OSError as e:
