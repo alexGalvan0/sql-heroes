@@ -24,41 +24,77 @@ def add_hero():
 
 
 def deleteHero():
-    heroId = input('Hero Id to delete: ')
+    hero_name = input('Hero name to delete: ')
     query = """
         DELETE FROM heroes
-        WHERE id = %s
+        WHERE name = %s
     """
     execute_query(query, (heroId,))
 
 
 def updateHero():
     heroId = input('Hero Id to Update: ')
-    updateField = input('What do you want to update? (name, about_me, biography): ')
+    updateField = input(
+        'What do you want to update? (name, about_me, biography): ')
     updateValue = input(f'What do you want to update {updateField} to? ')
 
-    params = (updateField,updateValue,heroId)
+    params = (updateValue, heroId)
 
     query = """
-        UPDATE heroes
-        SET %s = %s
-        WHERE id = %s
+    UPDATE heroes
+    SET name = %s
+    WHERE id = %s
     """
-    execute_query(query,(params,))
+    execute_query(query, params)
+
 
 def getProfile():
+    hero_name = input('What is your name? ')
+    params = (hero_name,)
+    query = """
+    SELECT 
+        name,
+        biography,
+        about_me
+    FROM heroes
+    WHERE name = %s
+    """
+    profile = execute_query(query, params).fetchall()
+    pp(profile)
 
 
+def getHeroAbilities():
+    query = """
+        SELECT 
+        abilities.id AS ABSID,
+        ability_types.name AS SUPNAME,
+        abilities.hero_id HERID
+
+        FROM ability_types
+        JOIN abilities ON abilities.ability_type_id = ability_types.id
+       
+    """
+    params = (1,)
+    pp(list(execute_query(query)))
 
 
 
 def start():
+    print("""
+    ___ ___  _ __ ___ (_) ___ ___ 
+  / __/ _ \| '_ ` _ \| |/ __/ __|
+ | (_| (_) | | | | | | | (__\__ /
+  \___\___/|_| |_| |_|_|\___|___/
+
+    """)
     step1 = input('What do you want to do?, (SignUp, Login): ')
 
     if step1 == 'SignUp':
         add_hero()
     if step1 == 'Login':
         getProfile()
-
-
+        step2 = input('What would you like to update? (profile, abilities, friends)')
+        if step2 == 'profile':
+            updateHero()
+        
 start()
