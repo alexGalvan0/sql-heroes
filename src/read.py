@@ -43,7 +43,6 @@ def updateHero():
     """
     params = (updateValue, heroName)
 
-
     execute_query(query, params)
 
 
@@ -62,29 +61,35 @@ def getProfile():
     pp(data)
 
 
-
-def getHeroAbilities():
-    heroId  = input('What is your Id? ')
+def getHeroAbilities(name):
+    params = (name,)
     query = """
-        SELECT 
-        ability_types.name,
-        abilities.hero_id
-        WHERE 
+    SELECT 
+    heroes.name,
+    ability_types.name
 
-        FROM ability_types
-        JOIN abilities ON abilities.ability_type_id = ability_types.id   
+
+    FROM heroes 
+    JOIN 
+        abilities ON heroes.id = abilities.hero_id
+    JOIN 
+        ability_types ON ability_types.id = abilities.ability_type_id
+
+    WHERE heroes.name = %s
+
+
     """
-    params = (1,)
-    pp(list(execute_query(query)))
+    pp(list(execute_query(query,params)))
+
 
 def getAllHeroes():
     query = """
     SELECT 
-        name
-    FROM 
+        names
+    FROM
         heroes
     """
-    data = execute_query(query).fetchall()
+    data = execute_query(query)
     pp(data)
 
 
@@ -97,6 +102,7 @@ def start():
 
     """)
     step1 = input('What do you want to do?, (SignUp, Login): ')
+    name = input('What is your name? ')
 
     if step1 == 'SignUp':
         add_hero()
@@ -110,7 +116,9 @@ def start():
     elif setep2 == 'Delete Profile':
         deleteHero()
     elif setep2 == 'get abilities':
-        getHeroAbilities()
+        getHeroAbilities(name)
     else:
         pp('that is not an optionLogin')
+
+
 start()
