@@ -63,7 +63,8 @@ def getHeroAbilities(name):
     query = """
     SELECT 
     heroes.name,
-    ability_types.name
+    ability_types.name,
+    ability_types.id
 
     FROM heroes 
     JOIN 
@@ -75,21 +76,25 @@ def getHeroAbilities(name):
     """
     pp(list(execute_query(query, params)))
 
+
 def addHeroAbilities(name):
     hero_id = getHeroId(name)
     ability_type_id = input('what super power do you want? ')
-    params = (hero_id,ability_type_id)
+    params = (hero_id, ability_type_id)
     query = """
     INSERT INTO abilities(hero_id,ability_type_id)VALUES(%s,%s)    
     """
-    execute_query(query,params)
+    execute_query(query, params)
+
+
 def getAbilities():
     query = """
         SELECT *
         FROM ability_types
     """
-    data =  execute_query(query).fetchall()
+    data = execute_query(query).fetchall()
     pp(data)
+
 
 def getHeroId(name):
     params = (name,)
@@ -98,10 +103,21 @@ def getHeroId(name):
     FROM heroes
     WHERE name = %s 
     """
-    heroId = execute_query(query,params).fetchall()
+    heroId = execute_query(query, params).fetchall()
 
     return int(heroId[0][0])
 
+
+def delAbilities(name):
+    getHeroAbilities(name)
+    superId = input('Which super power ID to delete? ')
+    hero_id = getHeroId(name)
+    params = (hero_id, superId)
+    query = """
+        DELETE FROM abilities
+        WHERE hero_id = %s AND ability_type_id = %s
+    """
+    execute_query(query, params)
 
 
 def getAllHeroes():
@@ -136,6 +152,7 @@ def start():
         pp('Not an Option')
 
     step2 = input('What next? (profile, friendships, abilities) ')
+
     if step2 == 'profile':
         step3 = input('Profile Options (delete, update) ')
         if step3 == 'delete':
@@ -145,12 +162,10 @@ def start():
             else:
                 pass
 
-
-
-
-
+#ABILITES
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
+
         if step3 == 'get':
             getHeroAbilities(name)
 
@@ -159,7 +174,11 @@ def start():
             getHeroId(name)
             addHeroAbilities(name)
             getHeroAbilities(name)
+            start()
 
-
+        if step3 == 'delete':
+            delAbilities(name)
+            start()
+#FRIENDSHIPS
 
 start()
