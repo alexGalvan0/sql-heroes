@@ -161,6 +161,17 @@ def addRelationships(name):
 
     execute_query(query, params)
 
+def deleteFriendships(name):
+    getFriendShips(name)
+    friendName = input('Who do you want to Delete as a friend? ')
+    friendId =  getHeroId(friendName)
+    params = (friendId, )
+    query = """
+    DELETE FROM relationships
+    WHERE hero2_id = %s
+    """
+    execute_query(query,params)
+
 
 def start():
     print("""
@@ -218,8 +229,12 @@ def start():
         step3 = input('get, add, delete ')
         if step3 == 'get':
             getFriendShips(name)
+            start()
         if step3 == 'add':
             addRelationships(name)
+            start()
+        if step3 == 'delete':
+            deleteFriendships(name)
             start()
 
 
