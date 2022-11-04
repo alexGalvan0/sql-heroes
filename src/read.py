@@ -22,13 +22,13 @@ def add_hero(name):
     execute_query(query, params)
 
 
-def deleteHero():
-    hero_name = input('Hero name to delete: ')
+def deleteHero(name):
+
     query = """
         DELETE FROM heroes
         WHERE name = %s
     """
-    execute_query(query, (hero_name,))
+    execute_query(query, (name,))
 
 
 def updateHero(name):
@@ -107,15 +107,24 @@ def start():
 
     if step1 == 'Login':
         getProfile(name)
-    setep2 = input('What next? (get Heroes, Delete Profile, get abilities) ')
-    if setep2 == 'get Heroes':
-        getAllHeroes()
-    elif setep2 == 'Delete Profile':
-        deleteHero()
-    elif setep2 == 'get abilities':
-        getHeroAbilities(name)
     else:
-        pp('that is not an optionLogin')
+        pp('Not an Option')
+
+    step2 = input('What next? (profile, friendships, abilities) ')
+    if step2 == 'profile':
+       step3 =  input('Profile Options (delete, update) ')
+    if step2 == 'abilities':
+        step3 = input('get, add, delete ')
+        if step3 == 'get':
+            getHeroAbilities(name)
+
+    if step3 == 'delete':
+        step4 = input('Do you want to delete your profile?(y,n)')
+        if step4 == 'y':
+            deleteHero(name)
+        else:
+            pass
+
 
 
 start()
