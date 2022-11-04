@@ -191,9 +191,14 @@ def start():
     if step1 == 'SignUp':
         add_hero(name)
         getProfile(name)
+        newStart(name)
     if step1 == 'Login':
         getProfile(name)
+        newStart(name)
 
+
+
+def newStart(name):
     step2 = input('What next? (profile, friendships, abilities) ')
     if step2 == 'profile':
         step3 = input('Profile Options (delete, update) ')
@@ -204,8 +209,6 @@ def start():
                 start()
         if step3 == 'update':
             updateHero(name)
-            start()
-
 # ABILITES
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
@@ -218,24 +221,29 @@ def start():
             getHeroId(name)
             addHeroAbilities(name)
             getHeroAbilities(name)
-            start()
+            newStart(name)
+
 
         if step3 == 'delete':
             delAbilities(name)
-            start()
+            newStart(name)
+
 
 # FRIENDSHIPS
     if step2 == 'friendships':
         step3 = input('get, add, delete ')
         if step3 == 'get':
             getFriendShips(name)
-            start()
+            newStart(name)
+
         if step3 == 'add':
             addRelationships(name)
-            start()
+            newStart(name)
+
         if step3 == 'delete':
             deleteFriendships(name)
-            start()
+            newStart(name)
+   
 
 
 start()
