@@ -12,8 +12,7 @@ def select_all():
         pp(record[1])
 
 
-def add_hero():
-    name = input('what is your Super Heroe Name? ')
+def add_hero(name):
     about_me = input('Tell me about yourself: ')
     bio = input('Tell me how you became super: ')
     params = (name, about_me, bio)
@@ -32,8 +31,7 @@ def deleteHero():
     execute_query(query, (hero_name,))
 
 
-def updateHero():
-    heroName = input('Hero name to Update: ')
+def updateHero(name):
     updateValue = input(f'What do you want to update name to? ')
 
     query = """
@@ -41,14 +39,13 @@ def updateHero():
     SET name = %s
     WHERE name = %s
     """
-    params = (updateValue, heroName)
+    params = (updateValue, name)
 
     execute_query(query, params)
 
 
-def getProfile():
-    hero_name = input('What is your name? ')
-    params = (hero_name,)
+def getProfile(name):
+    name = (name,)
     query = """
     SELECT 
         name,
@@ -57,7 +54,7 @@ def getProfile():
     FROM heroes
     WHERE name = %s
     """
-    data = execute_query(query, params).fetchall()
+    data = execute_query(query, name).fetchall()
     pp(data)
 
 
@@ -109,7 +106,7 @@ def start():
         getProfile()
 
     if step1 == 'Login':
-        getProfile()
+        getProfile(name)
     setep2 = input('What next? (get Heroes, Delete Profile, get abilities) ')
     if setep2 == 'get Heroes':
         getAllHeroes()
