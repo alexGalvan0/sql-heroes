@@ -131,6 +131,27 @@ def getAllHeroes():
     pp(data)
 
 
+
+
+
+
+
+def getFriendShips(name):
+    ids = getHeroId(name)
+    params = (ids,ids)
+    query = """
+        SELECT
+        heroes.name AS heroe ,
+        relationship_types.name
+
+        FROM heroes
+        JOIN relationships ON heroes.id = relationships.hero1_id
+        JOIN relationship_types ON relationship_types.id = relationships.relationship_type_id
+        WHERE hero1_id = %s OR hero2_id = %s
+    """
+    data = execute_query(query,params).fetchall()
+    pp(data)
+
 def start():
     print("""
     ___ ___  _ __ ___ (_) ___ ___ 
@@ -180,5 +201,6 @@ def start():
             delAbilities(name)
             start()
 #FRIENDSHIPS
-
+    if step2 == 'friendships':
+        getFriendShips(name)
 start()
