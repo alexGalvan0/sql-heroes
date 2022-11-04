@@ -67,10 +67,8 @@ def getHeroAbilities(name):
     ability_types.id
 
     FROM heroes 
-    JOIN 
-        abilities ON heroes.id = abilities.hero_id
-    JOIN 
-        ability_types ON ability_types.id = abilities.ability_type_id
+    JOIN abilities ON heroes.id = abilities.hero_id
+    JOIN ability_types ON ability_types.id = abilities.ability_type_id
 
     WHERE heroes.name = %s
     """
@@ -122,10 +120,8 @@ def delAbilities(name):
 
 def getAllHeroes():
     query = """
-    SELECT 
-        name
-    FROM
-        heroes
+    SELECT name
+    FROM heroes
     """
     data = execute_query(query).fetchall()
     pp(data)
@@ -161,16 +157,17 @@ def addRelationships(name):
 
     execute_query(query, params)
 
+
 def deleteFriendships(name):
     getFriendShips(name)
     friendName = input('Who do you want to Delete as a friend? ')
-    friendId =  getHeroId(friendName)
+    friendId = getHeroId(friendName)
     params = (friendId, )
     query = """
     DELETE FROM relationships
     WHERE hero2_id = %s
     """
-    execute_query(query,params)
+    execute_query(query, params)
 
 
 def start():
@@ -195,7 +192,6 @@ def start():
     if step1 == 'Login':
         getProfile(name)
         newStart(name)
-
 
 
 def newStart(name):
@@ -224,7 +220,6 @@ def newStart(name):
             getHeroAbilities(name)
             newStart(name)
 
-
         if step3 == 'delete':
             delAbilities(name)
             newStart(name)
@@ -244,7 +239,6 @@ def newStart(name):
         if step3 == 'delete':
             deleteFriendships(name)
             newStart(name)
-   
 
 
 start()
