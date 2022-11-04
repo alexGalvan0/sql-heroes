@@ -123,34 +123,44 @@ def delAbilities(name):
 def getAllHeroes():
     query = """
     SELECT 
-        names
+        name
     FROM
         heroes
     """
-    data = execute_query(query)
+    data = execute_query(query).fetchall()
     pp(data)
-
-
-
-
-
 
 
 def getFriendShips(name):
     ids = getHeroId(name)
-    params = (ids,ids)
+    params = (ids, ids)
     query = """
         SELECT
         heroes.name AS heroe ,
         relationship_types.name
 
         FROM heroes
-        JOIN relationships ON heroes.id = relationships.hero1_id
+        JOIN relationships ON heroes.id = relationships.hero2_id
         JOIN relationship_types ON relationship_types.id = relationships.relationship_type_id
         WHERE hero1_id = %s OR hero2_id = %s
     """
-    data = execute_query(query,params).fetchall()
+    data = execute_query(query, params).fetchall()
     pp(data)
+
+
+def addRelationships(name):
+    getAllHeroes()
+    hero2 = input('Who do you want as a friend? ')
+    relation = input(('friends-1 or enemies-2: '))
+    hero1 = getHeroId(name)
+    hero2 = getHeroId(hero2)
+    query = """
+    INSERT INTO relationships(hero1_id,hero2_id, relationship_type_id)VALUES(%s,%s,%s)
+    """
+    params = (hero1, hero2, relation)
+
+    execute_query(query, params)
+
 
 def start():
     print("""
@@ -182,17 +192,11 @@ def start():
             if step4 == 'y':
                 deleteHero(name)
                 start()
-            else:
-                pp('not an option')
-            exit()
         if step3 == 'update':
             updateHero(name)
             start()
-        else:
-            pp('not an option')
-            exit()
 
-#ABILITES
+# ABILITES
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
 
@@ -210,12 +214,14 @@ def start():
             delAbilities(name)
             start()
 
-#FRIENDSHIPS
+# FRIENDSHIPS
     if step2 == 'friendships':
         step3 = input('get, add, delete ')
         if step3 == 'get':
             getFriendShips(name)
-        else:
-            pp('not an option')
-            exit()
+        if step3 == 'add':
+            addRelationships(name)
+            start()
+
+
 start()
