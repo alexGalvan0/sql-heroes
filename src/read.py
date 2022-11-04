@@ -75,11 +75,31 @@ def getHeroAbilities(name):
     """
     pp(list(execute_query(query, params)))
 
-def addHeroAbilities(name):
-    params = (name, )
+def addHeroAbilities():
+    hero_id = input('What is your id? ')
+    ability_type_id = input('what super power do you want? ')
+    params = (hero_id,ability_type_id)
     query = """
-    INSERT INTO abilities(hero_id,ability_type_id)VALUES(17,5)    
+    INSERT INTO abilities(hero_id,ability_type_id)VALUES(%s,%s)    
     """
+    execute_query(query,params)
+def getAbilities():
+    query = """
+        SELECT *
+        FROM ability_types
+    """
+    data =  execute_query(query).fetchall()
+    pp(data)
+
+def getHeroId(name):
+    params = (name,)
+    query = """
+    SELECT id
+    FROM heroes
+    WHERE name = %s 
+    """
+    heroId = execute_query(query,params).fetchall()
+    pp(heroId)
 
 
 
@@ -90,7 +110,7 @@ def getAllHeroes():
     FROM
         heroes
     """
-    data = execute_query(query)
+    data = execute_query(query).fetchall()
     pp(data)
 
 
@@ -119,12 +139,22 @@ def start():
         step3 = input('Profile Options (delete, update) ')
 
 
+
+
+
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
         if step3 == 'get':
             getHeroAbilities(name)
+
         if step3 == 'add':
-            addHeroAbilities(name)
+            getAbilities()
+            getHeroId(name)
+            addHeroAbilities()
+            getHeroAbilities(name)
+
+
+
 
     if step3 == 'delete':
         step4 = input('Do you want to delete your profile?(y,n)')
