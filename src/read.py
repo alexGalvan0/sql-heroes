@@ -179,9 +179,6 @@ def start():
         getProfile(name)
     if step1 == 'Login':
         getProfile(name)
-    else:
-        pp('not an option')
-        exit()
 
     step2 = input('What next? (profile, friendships, abilities) ')
 
