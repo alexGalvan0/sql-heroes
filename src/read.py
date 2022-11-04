@@ -184,7 +184,6 @@ def start():
         getProfile(name)
 
     step2 = input('What next? (profile, friendships, abilities) ')
-
     if step2 == 'profile':
         step3 = input('Profile Options (delete, update) ')
         if step3 == 'delete':
