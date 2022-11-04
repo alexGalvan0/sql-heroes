@@ -76,7 +76,7 @@ def getHeroAbilities(name):
 
 
     """
-    pp(list(execute_query(query,params)))
+    pp(list(execute_query(query, params)))
 
 
 def getAllHeroes():
@@ -112,7 +112,9 @@ def start():
 
     step2 = input('What next? (profile, friendships, abilities) ')
     if step2 == 'profile':
-       step3 =  input('Profile Options (delete, update) ')
+        step3 = input('Profile Options (delete, update) ')
+
+        
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
         if step3 == 'get':
@@ -124,7 +126,6 @@ def start():
             deleteHero(name)
         else:
             pass
-
 
 
 start()
