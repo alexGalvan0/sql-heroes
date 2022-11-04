@@ -209,6 +209,7 @@ def newStart(name):
                 start()
         if step3 == 'update':
             updateHero(name)
+            newStart(name)
 # ABILITES
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
