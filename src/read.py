@@ -65,7 +65,6 @@ def getHeroAbilities(name):
     heroes.name,
     ability_types.name
 
-
     FROM heroes 
     JOIN 
         abilities ON heroes.id = abilities.hero_id
@@ -73,10 +72,15 @@ def getHeroAbilities(name):
         ability_types ON ability_types.id = abilities.ability_type_id
 
     WHERE heroes.name = %s
-
-
     """
     pp(list(execute_query(query, params)))
+
+def addHeroAbilities(name):
+    params = (name, )
+    query = """
+    INSERT INTO abilities(hero_id,ability_type_id)VALUES(17,5)    
+    """
+
 
 
 def getAllHeroes():
@@ -102,8 +106,8 @@ def start():
     name = input('What is your name? ')
 
     if step1 == 'SignUp':
-        add_hero()
-        getProfile()
+        add_hero(name)
+        getProfile(name)
 
     if step1 == 'Login':
         getProfile(name)
@@ -114,11 +118,13 @@ def start():
     if step2 == 'profile':
         step3 = input('Profile Options (delete, update) ')
 
-        
+
     if step2 == 'abilities':
         step3 = input('get, add, delete ')
         if step3 == 'get':
             getHeroAbilities(name)
+        if step3 == 'add':
+            addHeroAbilities(name)
 
     if step3 == 'delete':
         step4 = input('Do you want to delete your profile?(y,n)')
